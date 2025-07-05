@@ -3,6 +3,7 @@ require 'csv'
 class ItemsController < ApplicationController
   def index
     @items =Item.all
+    @total_general= @items.sum(&:subtotal)
   end
 
   def import

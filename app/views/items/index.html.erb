@@ -1,5 +1,9 @@
 <h1>Visualizador de items</h1>
 
+<div>
+    <p><strong>Total de ganancias: </strong> <%= number_to_currency(@total_general) %></p>
+</div>
+
 <% if flash[:notice] %>
 <div style="color: green; margin-bottom: 10px;">
     <%= flash[:notice] %>
