@@ -1,0 +1,51 @@
+<h1>Visualizador de items</h1>
+
+<% if flash[:notice] %>
+<div style="color: green; margin-bottom: 10px;">
+    <%= flash[:notice] %>
+</div>
+<% end %>
+
+<% if flash[:alert] %>
+<div style="color: red; margin-bottom: 10px;">
+    <%= flash[:alert] %>
+</div>
+<% end %>
+
+<%= form_with url: import_items_path, local: true, html: {multipart:true} do |form| %>
+<div>
+    <%= form.file_field :file, accept: '.tsv'%>
+    <%= form.submit "Importar" %>
+</div>
+<%end%>
+
+<%= button_to "Borrar todos los items", destroy_all_items_path, method: :delete %>
+
+<% if @items.any? %>
+<table cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Descripcion del producto</th>
+            <th>Precio por pieza</th>
+            <th>Numero de piezas</th>
+            <th>Direccion del vendedor</th>
+            <th>Nombre del vendedor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @items.each do |item| %>
+        <tr>
+            <td><%= item.cliente %></td>
+            <td><%= item.descripcion %></td>
+            <td><%= item.precio %></td>
+            <td><%= item.piezas %></td>
+            <td><%= item.direccion %></td>
+            <td><%= item.vendedor %></td>
+        </tr>
+        <%end%>
+    </tbody>
+</table>
+<%else%>
+<p>No hay items disponibles</p>
+<%end%>
