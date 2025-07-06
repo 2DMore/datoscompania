@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resource :session
+  resources :passwords, param: :token
   root "items#index"
 
   resources :items do
@@ -7,6 +9,9 @@ Rails.application.routes.draw do
       delete :destroy_all
     end
   end
+
+  get "signup", to: "registrations#new", as: :new_registration
+  post "registration/create", to: "registrations#create", as: :registration
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
