@@ -1,20 +1,27 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: #0d1b2a; color: #e0e1dd; border: 1px solid #415a77;">
+        <h3 class="text-center mb-4">Crear cuenta</h3>
 
-<% if @user.errors.any? %>
-<ul style="color: red;">
-    <% @user.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-</ul>
-<% end %>
+        <%= form_with model: @user, url: registration_path, html:{class:"mt-2"} do |form| %>
+        <div class="mb-3">
+            <%= form.label :email_address, "Correo electrónico", class: "form-label text-light" %>
+            <%= form.email_field :email_address, class: "form-control border-light",required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %>
+        </div>
+        <div class="mb-3">
+            <%= form.label :password, "Contraseña", class: "form-label text-light" %>
+            <%= form.password_field :password, class: "form-control border-light",required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %>
+        </div>
+        <div class="mb-3">
+            <%= form.label :password_confirmation, "Confirmar contraseña", class: "form-label text-light" %>
+            <%= form.password_field :password_confirmation, class: "form-control border-light",required: true, placeholder: "Confirma tu contraseña" %>
+        </div>
+        <div class="d-grid">
+            <%= form.submit "Sign up", class:"btn btn-primary" %>
+        </div>
+        <% end %>
 
-<%= form_with model: @user, url: registration_path do |form| %>
-<%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-<%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-<%= form.password_field :password_confirmation, required: true, placeholder: "Confirma tu contraseña" %><br>
-<%= form.submit "Sign up" %>
-<% end %>
-<br>
-
-<%= link_to "Regresar", new_session_path %>
+        <div class="text-center mt-3">
+            <%= link_to "Regresar", new_session_path, class: "link-light" %>
+        </div>
+    </div>
+</div>
