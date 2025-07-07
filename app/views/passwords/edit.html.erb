@@ -1,9 +1,19 @@
-<h1>Update your password</h1>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: #0d1b2a; color: #e0e1dd; border: 1px solid #415a77;">
+        <h3 class="text-center mb-4">Reestablecer contraseña</h3>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-
-<%= form_with url: password_path(params[:token]), method: :put do |form| %>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
-  <%= form.submit "Save" %>
-<% end %>
+        <%= form_with url: password_path(params[:token]), html:{class:"mt-2"}, method: :put do |form| %>
+        <div class="mb-3">
+            <%= form.label :password, "Contraseña", class: "form-label text-light" %>
+            <%= form.password_field :password, required: true, class: "form-control border-light",autocomplete: "new-password", placeholder: "Ingresa la nueva contraseña", maxlength: 72 %>
+        </div>
+        <div class="mb-3">
+            <%= form.label :password, "Confirmar contraseña", class: "form-label text-light" %>
+            <%= form.password_field :password_confirmation, required: true, class: "form-control border-light", autocomplete: "new-password", placeholder: "Otra vez", maxlength: 72 %>
+        </div>
+        <div class="d-grid">
+            <%= form.submit "Guardar", class:"btn btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+</div>

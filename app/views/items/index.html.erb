@@ -1,63 +1,79 @@
-<header style="padding: 10px; background-color: #f0f0f0;">
-    <% if authenticated? %>
-    <%= button_to "Cerrar sesión", session_path, method: :delete, form: { style: "display:inline" }, data: { turbo: false } %>
-    <% else %>
-    <%= link_to "Iniciar sesión", new_session_path %>
-    <% end %>
-</header>
+<div class="container my-4 p-4 rounded" style=" color: #e0e1dd;">
 
-<h1>Visualizador de items</h1>
+    <header class="d-flex justify-content-between align-items-center p-3 mb-4 rounded" style="background-color: #415a77;">
+        <h2 class="m-0">Visualizador de Items</h2>
+        <div>
+            <% if authenticated? %>
+            <%= button_to "Cerrar sesión", session_path, method: :delete,
+              class: "btn btn-outline-light", data: { turbo: false }, form: { class: "d-inline" } %>
+            <% else %>
+            <%= link_to "Iniciar sesión", new_session_path, class: "btn btn-outline-light" %>
+            <% end %>
+        </div>
+    </header>
 
-<div>
-    <p><strong>Total de ganancias: </strong> <%= number_to_currency(@total_general) %></p>
+    <div>
+        <div class="alert alert-info text-dark bg-info-subtle">
+            <strong>Total de ganancias:</strong> <%= number_to_currency(@total_general) %>
+        </div>
+
+        <% if flash[:notice] %>
+        <div class="alert alert-success text-dark bg-success-subtle"><%= flash[:notice] %></div>
+        <% end %>
+
+        <% if flash[:alert] %>
+        <div class="alert alert-danger text-dark bg-danger-subtle"><%= flash[:alert] %></div>
+        <% end %>
+
+        <div class="card mb-4" style="background-color: #415a77; color: #e0e1dd;">
+            <div class="card-body">
+                <%= form_with url: import_items_path, local: true, html: { multipart: true } do |form| %>
+                <div class="row align-items-end">
+                    <div class="col-md-6">
+                        <%= form.label :file, "Selecciona un archivo .tsv" %>
+                        <%= form.file_field :file, accept: '.tsv', class: "form-control bg-dark text-light border-light" %>
+                    </div>
+                    <div class="col-md-3">
+                        <%= form.submit "Importar", class: "btn btn-light mt-2 mt-md-0" %>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+
+        <%= button_to "Borrar todos los items", destroy_all_items_path, method: :delete,
+          class: "btn btn-danger mb-4" %>
+
+        <% if @items.any? %>
+        <div class="table-responsive">
+            <table class="table table-responsive table-striped table-dark table-hover">
+                <thead style="background-color: #415a77;">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Descripción del producto</th>
+                        <th>Precio por pieza</th>
+                        <th>Número de piezas</th>
+                        <th>Dirección del vendedor</th>
+                        <th>Nombre del vendedor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @items.each do |item| %>
+                    <tr>
+                        <td><%= item.cliente %></td>
+                        <td><%= item.descripcion %></td>
+                        <td><%= number_to_currency(item.precio) %></td>
+                        <td><%= item.piezas %></td>
+                        <td><%= item.direccion %></td>
+                        <td><%= item.vendedor %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+
+        <% else %>
+        <div class="alert alert-warning text-dark bg-warning-subtle">No hay items disponibles</div>
+        <% end %>
+    </div>
 </div>
-
-<% if flash[:notice] %>
-<div style="color: green; margin-bottom: 10px;">
-    <%= flash[:notice] %>
-</div>
-<% end %>
-
-<% if flash[:alert] %>
-<div style="color: red; margin-bottom: 10px;">
-    <%= flash[:alert] %>
-</div>
-<% end %>
-
-<%= form_with url: import_items_path, local: true, html: {multipart:true} do |form| %>
-<div>
-    <%= form.file_field :file, accept: '.tsv'%>
-    <%= form.submit "Importar" %>
-</div>
-<%end%>
-
-<%= button_to "Borrar todos los items", destroy_all_items_path, method: :delete %>
-
-<% if @items.any? %>
-<table cellpadding="10" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>Descripcion del producto</th>
-            <th>Precio por pieza</th>
-            <th>Numero de piezas</th>
-            <th>Direccion del vendedor</th>
-            <th>Nombre del vendedor</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @items.each do |item| %>
-        <tr>
-            <td><%= item.cliente %></td>
-            <td><%= item.descripcion %></td>
-            <td><%= item.precio %></td>
-            <td><%= item.piezas %></td>
-            <td><%= item.direccion %></td>
-            <td><%= item.vendedor %></td>
-        </tr>
-        <%end%>
-    </tbody>
-</table>
-<%else%>
-<p>No hay items disponibles</p>
-<%end%>

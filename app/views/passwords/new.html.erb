@@ -1,8 +1,15 @@
-<h1>Forgot your password?</h1>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: #0d1b2a; color: #e0e1dd; border: 1px solid #415a77;">
+        <h3 class="text-center mb-4">Reestablecer contraseña</h3>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+        <%= form_with url: passwords_path, html:{class:"mt-2"} do |form| %>
+        <div class="mb-3">
+            <%= form.label :email_address, "Correo", class: "form-label text-light" %>
+            <%= form.email_field :email_address, class: "form-control border-light", required: true, autofocus: true, autocomplete: "username", placeholder: "abc@gmail.com", value: params[:email_address] %>
+        </div>
+        <div class="d-grid">
+            <%= form.submit "Enviar correo", class:"btn btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+</div>
