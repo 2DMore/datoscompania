@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   private
 
   def user_params

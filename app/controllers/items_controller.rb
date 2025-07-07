@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class ItemsController < ApplicationController
   def index
@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
         descripcion: row["Descripción del Producto"],
         precio: row["Precio por pieza"],
         piezas: row["Numero de piezas"],
-        direccion: row["Diección del vendedor"], #Asi esta escrito en el documento de ejemplo
+        direccion: row["Diección del vendedor"], # Asi esta escrito en el documento de ejemplo
         vendedor: row["Nombre del Vendedor"]
       )
     end
