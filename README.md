@@ -12,7 +12,7 @@ Instrucciones para correr el proyecto:
   *  Docker
 ### Instrucciones
   ```
-  git clone https://github.com/2DMore/datoscompania
+  git clone https://github.com/2DMore/datoscompania.git
   cd datoscompania
   sudo apt install docker.io
   sudo docker build -t datos_compania .
